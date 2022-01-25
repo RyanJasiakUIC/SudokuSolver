@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" 
+              fx:id = "Root" onKeyPressed="#handleKeyPressed" styleClass="border" fx:controller="SudokuGameController">
+    
+   <padding>
+      <Insets top="35" right="35" bottom="35" left="35"/>
+   </padding>
+
+
+    <center>
+        <GridPane fx:id="GameGrid" Hgap="2" Vgap="2">
+
+        </GridPane>
+    </center>
+
+</BorderPane>
+
+<!-- Menlo, Monaco, 'Courier New', monospace -->
