@@ -1,4 +1,5 @@
 import java.net.URL;
+import java.util.Deque;
 import java.util.Queue;
 import java.util.ResourceBundle;
 
@@ -26,6 +27,8 @@ public class SudokuGameController implements Initializable {
     private final String EDITABLE_BOX__HOVER = "button:hover";
     private final String EDITABLE_BOX_PRESSED_HOVER = "button:pressed:hover";
     private final String EDITABLE_BOX_SELECTED = "selectedButton";
+    private final String EDITABLE_BOX_CORESPONDING = "buttonCorresponding";
+    private final String NOT_EDITABLE_BOX_CORESPONDING = "notClickableButtonCorresponding";
 
     //
     // FXML Variables:
@@ -92,8 +95,75 @@ public class SudokuGameController implements Initializable {
         b.setMaxWidth(GAME_BUTTON_SIZE);
     }
 
+    private void disableCorrespondingBoxes(Button b) {
+        int x = 0, y = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (GameBoxes[i][j] == b) {
+                    x = i;
+                    y = j;
+                }
+            }
+        }
+        for (int col = 0; col < 9; col++) {
+            if (col != y) {
+                GameBoxes[x][col].getStyleClass().remove(
+                    (isClickable[x][col]) ? EDITABLE_BOX_CORESPONDING : NOT_EDITABLE_BOX_CORESPONDING);
+            }
+        }
+        for (int row = 0; row < 9; row++) {
+            if (row != x)
+            GameBoxes[row][y].getStyleClass().remove(
+                (isClickable[row][y]) ? EDITABLE_BOX_CORESPONDING : NOT_EDITABLE_BOX_CORESPONDING);
+        }
+        int a = x - (x % 3);
+        int c = y - (y % 3);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (!((x == a+i) && (y == c+j)))
+                GameBoxes[a+i][c+j].getStyleClass().remove(
+                    (isClickable[a+i][c+j]) ? EDITABLE_BOX_CORESPONDING : NOT_EDITABLE_BOX_CORESPONDING);
+            }
+        }
+    }
+
+    private void enableCorrespondingBoxes(Button b) {
+        int x = 0, y = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                if (GameBoxes[i][j] == b) {
+                    x = i;
+                    y = j;
+                }
+            }
+        }
+        for (int col = 0; col < 9; col++) {
+            if (col != y) {
+                GameBoxes[x][col].getStyleClass().add(
+                    (isClickable[x][col]) ? EDITABLE_BOX_CORESPONDING : NOT_EDITABLE_BOX_CORESPONDING);
+            }
+        }
+        for (int row = 0; row < 9; row++) {
+            if (row != x)
+            GameBoxes[row][y].getStyleClass().add(
+                (isClickable[row][y]) ? EDITABLE_BOX_CORESPONDING : NOT_EDITABLE_BOX_CORESPONDING);
+        }
+        int a = x - (x % 3);
+        int c = y - (y % 3);
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (!((x == a+i) && (y == c+j)))
+                GameBoxes[a+i][c+j].getStyleClass().add(
+                    (isClickable[a+i][c+j]) ? EDITABLE_BOX_CORESPONDING : NOT_EDITABLE_BOX_CORESPONDING);
+            }
+        }
+    }
+
+    // private void updateCorresponding
+
     private void sudokuButtonAction(Button b) {
         if (selectedButton != null) {
+            disableCorrespondingBoxes(selectedButton);
             if (buttonIsClickable(selectedButton)) {
                 selectedButton.getStyleClass().remove(EDITABLE_BOX_SELECTED);
                 selectedButton.getStyleClass().add(EDITABLE_BOX);
@@ -112,6 +182,7 @@ public class SudokuGameController implements Initializable {
             b.getStyleClass().add(NOT_EDITABLE_BOX_SELECTED);
         }
         selectedButton = b;
+        enableCorrespondingBoxes(b);
     }
 
     private boolean buttonIsClickable(Button b) {
@@ -156,11 +227,12 @@ public class SudokuGameController implements Initializable {
                 if (isClickable[i][j]) GameBoxes[i][j].setText("");
     }
 
-    private void animateAiSolution(Queue<SudokuAiAction> AiSolutionMoves) {
-        PauseTransition pause = new PauseTransition(Duration.millis(5));
+    private void animateAiSolution(Deque<SudokuAiAction> AiSolutionMoves) {
+        PauseTransition pause = new PauseTransition(Duration.millis(50));
         pause.setOnFinished(e -> {
             SudokuAiAction action = AiSolutionMoves.poll();
             if (action != null) {
+                sudokuButtonAction(GameBoxes[action.x][action.y]);
                 GameBoxes[action.x][action.y].setText((action.val == 0) ? "" : Integer.toString(action.val));
                 animateAiSolution(AiSolutionMoves);
             }

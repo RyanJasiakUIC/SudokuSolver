@@ -9,7 +9,7 @@ public class SudokuAiSolver {
     GridPane SubGameGrids[][];
     boolean isClickable[][];
 
-    Queue<SudokuAiAction> AiSolutionMoves;
+    Deque<SudokuAiAction> AiSolutionMoves;
 
     public SudokuAiSolver(SudokuBoard sb, Button[][] gb, GridPane[][] sgg, boolean[][] ic) {
         Board = sb;
@@ -19,7 +19,7 @@ public class SudokuAiSolver {
         AiSolutionMoves = new LinkedList<>();
     }
 
-    public Queue<SudokuAiAction> getAiSolutionMoves() {
+    public Deque<SudokuAiAction> getAiSolutionMoves() {
         return AiSolutionMoves;
     }
 
@@ -87,7 +87,9 @@ public class SudokuAiSolver {
             }
             // else System.out.println("INVALID NUM");
             Board.getButtonsArray()[x][y] = 0;
-            AiSolutionMoves.add(new SudokuAiAction(x, y, 0));
+            SudokuAiAction s = AiSolutionMoves.getLast();
+            if (!(s.val == 0 && s.x == x && s.y == y))
+                AiSolutionMoves.add(new SudokuAiAction(x, y, 0));
         }
         // System.out.println("FALSE, " + x + "," + y);
         return false;

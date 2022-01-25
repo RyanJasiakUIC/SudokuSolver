@@ -13,7 +13,7 @@
 .button:pressed:hover {
 	-fx-font-size: 24px;
 	/* -fx-font-weight: bold; */
-	-fx-background-color: #92afaf;
+	-fx-background-color: #c4c4c4;
     -fx-font-family: 'Verdana';
     -fx-border-color:black;
     -fx-border-width: 0.5;
@@ -25,7 +25,7 @@
 .button:hover {
 	-fx-font-size: 22px;
 	/* -fx-font-weight: bold; */
-	-fx-background-color: #bdd6d6;
+	-fx-background-color: #e2e2e2;
     -fx-font-family: 'Verdana';
     -fx-border-color:black;
     -fx-border-width: 0.5;
@@ -49,7 +49,7 @@
 .selectedButtonRed {
 	-fx-font-size: 22px;
 	/* -fx-font-weight: bold; */
-	-fx-background-color: #9e8282;
+	-fx-background-color: #aa6f6f;
     -fx-border-color:black;
     -fx-border-width: 0.5;
     -fx-font-family: 'Verdana';
@@ -61,7 +61,31 @@
 .selectedButton {
 	-fx-font-size: 22px;
 	/* -fx-font-weight: bold; */
-	-fx-background-color: #97bcbc;
+	-fx-background-color: #f1f1f1;
+    -fx-border-color:black;
+    -fx-border-width: 0.5;
+    -fx-font-family: 'Verdana';
+    -fx-background-radius:0;
+    -fx-background-insets: 0;
+    -fx-alignment: CENTER;
+}
+
+.buttonCorresponding {
+	-fx-font-size: 22px;
+	/* -fx-font-weight: bold; */
+	-fx-background-color: rgb(186, 205, 206);
+    -fx-border-color:black;
+    -fx-border-width: 0.5;
+    -fx-font-family: 'Verdana';
+    -fx-background-radius:0;
+    -fx-background-insets: 0;
+    -fx-alignment: CENTER;
+}
+
+.notClickableButtonCorresponding {
+	-fx-font-size: 22px;
+	/* -fx-font-weight: bold; */
+	-fx-background-color: #879192;
     -fx-border-color:black;
     -fx-border-width: 0.5;
     -fx-font-family: 'Verdana';
